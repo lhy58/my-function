@@ -40,3 +40,43 @@ export function endTime(){
     end_time.setDate(end_time.getDate() + 1);
     return end_time.toISOString().slice(0,16).replace(/T/,' ');
 }
+
+//倒计时
+export function countTime(end_time){
+    let t = ((end_time - new Date()) / 1000); //秒
+    let m = Math.floor(t / 60);
+    let s = Math.floor(t % 60);
+    let h = Math.floor(t / 3600);
+    return {
+        s_r: Math.floor(s % 10),
+        s_l: Math.floor(s / 10),
+        m_r: Math.floor(m % 10),
+        m_l: Math.floor((m % 100)/10),
+        h_r: Math.floor(h % 10),
+        h_l: Math.floor(h / 10),
+    };
+}
+
+
+/**
+ * 禁止window滑动  适用于模态框弹框底部滑动问题
+ * 用法: stopBodyScroll(true) 禁止底部滑动(弹框时调用该方法)
+ *  stopBodyScroll(false)  释放(模态框消失时调用该方法)
+ *
+ */
+export function stopBodyScroll(isFixed){
+    let bodyEl = document.body;
+    let top = 0;
+    if (isFixed) {
+        //top = window.scrollY;
+        bodyEl.style.position = 'fixed';
+        bodyEl.style.top = -top + 'px';
+        bodyEl.style.width = '100%';
+    } else {
+        bodyEl.style.position = '';
+        bodyEl.style.top = '';
+        bodyEl.style.width = '';
+
+        window.scrollTo(0, top) // 回到原先的top
+    }
+}
