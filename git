@@ -1,0 +1,38 @@
+git 切换远程分支
+
+http://zhidao.baidu.com/link?url=cuqJsL9skJJn5c556zXfP1dgCAOUK37CDXkNIw_sS0YKmvoROTI0HP7-PbKjgs6Lv4XrGleG2fjg5AaNgASlxgmt00c7rsC5gpPryKR_D_G
+
+git clone只能clone远程库的master分支，无法[1]clone所有分支，解决办法如下：
+
+找一个干净目录，假设是git_work
+cd git_work
+git clone http://myrepo.xxx.com/project/.git ,这样在git_work目录下得到一个project子目录
+cd project
+git branch -a，列出所有y远程分支名称
+git checkout -b dev origin/dev 作用是checkout远程的dev分支，在本地起名为dev分支，并切换到本地的dev分支
+git checkout dev，切换回dev分支，并开始开发。
+git remote -v 查看远程仓库
+git remote add [name] [url] 添加远程仓库
+git remote rm [name] 删除远程仓库
+git branch [name] 创建本地分支
+git branch -d [name] 删除分支 -d选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D选项
+git merge origin/dev 将分支dev与当前分支进行合并
+git branch -a 查看所有的分支 git branch -r 查看本地所有分支
+推送本地分支到远程分支的两种方法
+一种是在远程开好分支，本地直接拉下来 git checkout -b dev origin/dev 检出远程的dev分支，在本地起名为dev分支，并切换到本地的dev分支
+
+一种是本地开好分支，推送到远程 git checkout -b dev git push origin dev:dev 推送本地dev（冒号前面）分支到远程origin的dev分支
+
+查看日志
+git log 查看历史提交的日志 git log --oneline 可以看到简洁版的日志 git reflog 可以倒序查看提交日志 回退到指定的版本： git reset --hard Head~`0 表示回退到上一次代码提交时的状态 git reset --hard Head~1 表示回退到上上一次代码提交时的状态
+
+###ssh方式上传代码
+
+- 公钥 私钥 - 生成公钥和私钥 + ssh-keygen -t rsa -C "511252519@qq.com"
+配置公钥和私钥 User\Administrator.ssh\id.rsa git pull 隐含了 git merge
+
+设置git代理
+git config --global http.proxy http://127.0.0.1:1080
+取消git代理
+git config --global --unset http.proxy
+
