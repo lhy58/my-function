@@ -80,3 +80,41 @@ export function stopBodyScroll(isFixed){
         window.scrollTo(0, top) // 回到原先的top
     }
 }
+
+/*
+* 深克隆函数
+* @_isClass判断类型
+* @deepClone克隆
+*/
+const _isClass = (obj) => {
+    if(obj === null){
+       return 'null'
+    }
+    if(obj === undefined){
+       return 'undefined'
+    }
+    return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase()
+}
+
+function deepClone(obj){
+    let result
+    let oClass = _isClass(obj)
+    if (oClass === 'object') {
+        result = {}
+    }else if(oClass === 'array'){
+        result = []
+    }else {
+        return obj
+    }
+    for (let key in obj) {
+       let copy = obj[key]
+       if(_isClass(obj[key]) === 'object'){
+           result[key] = deepClone(copy)
+       } else if(_isClass(obj[key]) === 'array'){
+           result[key] = deepClone(copy)
+       }else{
+           result[key] = obj[key]
+       }
+    }
+    return result
+}
