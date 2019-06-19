@@ -9,6 +9,12 @@ class extends React.Component{
        // 自定跳转,不刷新浏览器
        this.props.history.push('/home')
 
+       //
+       this.props.history.push({
+         pathname: '/home',
+         query: {}
+       })
+
        // 刷新浏览器
        window.location.href = '/home'
    }
