@@ -195,3 +195,22 @@ function parserTime (times) {
   }
   return dd
 }
+
+/*
+*防抖函数: 防止快速点击 如果在 300 毫秒内又发生了这个事件则废除上一次点击，重新计时
+*id: 唯一标识
+*fn: 函数 使用:delay_till_last('id', ()=>{}, 300)
+*wait: 时间 默认300毫秒
+*/
+
+var _timer = {};
+function delay_till_last (id, fn, wait) {
+  if (_timer[id]) {
+    window.clearTimeout(_timer[id]);
+    delete _timer[id];
+  }
+  return _timer[id] = window.setTimeout(function () {
+    fn();
+    delete _timer[id];
+  }, wait);
+}
