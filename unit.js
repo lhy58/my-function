@@ -96,7 +96,7 @@ const _isClass = (obj) => {
     return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase()
 }
 
-function deepClone(obj){
+export function deepClone(obj){
     let result
     let oClass = _isClass(obj)
     if (oClass === 'object') {
@@ -122,7 +122,7 @@ function deepClone(obj){
 /*
 *深克隆
 */
-function deepClone_1(obj){
+export function deepClone_1(obj){
   if(Array.isArray(obj)){
     return obj.map(item => {
       return deepClone_1(item)
@@ -141,7 +141,7 @@ function deepClone_1(obj){
 *比较两个日期相差的天数,可为负值
 *传入格式: 2018-12-18
 */
-function difftime (time1, time2) {
+export function difftime (time1, time2) {
   let aDate1 = time1.split('-')
   let aDate2 = time2.split('-')
   let oDate1 = new Date(aDate1[0], aDate1[1] - 1, aDate1[2])
@@ -165,7 +165,7 @@ function difftime (time1, time2) {
 *3.更早日期显示: 月 日 时间
 *
 */
-function parserTime (times) {
+export function parserTime (times) {
   //把日期以:隔开,替换所有的: /,T,-为:
   times = times.replace(/\//g, ':')
   times = times.replace(/\-/g, ':')
@@ -204,7 +204,7 @@ function parserTime (times) {
 */
 
 var _timer = {};
-function delay_till_last (id, fn, wait) {
+export function delay_till_last (id, fn, wait) {
   if (_timer[id]) {
     window.clearTimeout(_timer[id]);
     delete _timer[id];
@@ -214,3 +214,30 @@ function delay_till_last (id, fn, wait) {
     delete _timer[id];
   }, wait);
 }
+
+/*
+*正则表达式匹配手机号
+*/
+export function checkPhone(){
+    if(!(/^1[34578]\d{9}$/.test(phone))){
+        alert("手机号码有误，请重填");
+        return false;
+    }
+}
+
+/*
+*如何将浮点数点左边的数每三位添加一个逗号，
+*@ 如12000000.11转化为『12,000,000.11』
+*/
+export function commafy(num){
+    return num && num
+        .toString()
+        .replace(/(\d)(?=(\d{3})+\.)/g, function($1, $2){
+            return $2 + ',';
+        });
+}
+
+/*
+*邮箱验证
+*/
+export const pattern = /^([A-Za-z0-9_\-\.\u4e00-\u9fa5])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,8})$/;
