@@ -53,6 +53,9 @@ git config --global --unset http.proxy
 
 3：$ git add . 
 
+3.1：#撤销暂存区所有文件
+$ git restore --staged .
+
 第三步：将暂存区的文件提交到本地仓库
 
 4：$ git commit -m "注释"
