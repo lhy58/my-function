@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>javascript 虚拟列表</title>
+  </head>
+  <style>
+    html,body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-size: 14px;
+      line-height: 1.6;
+      font-family: '微软雅黑';
+    }
+    ul, li { 
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .itemList {
+        width: 100%;
+        max-width: 750px;
+        height: 100%;
+        overflow-y: auto;
+        padding: 10px 10px 0 10px;
+        box-sizing: border-box;
+        margin: 0 auto;
+    }
+    .itemList .itemArea{
+        overflow: hidden;
+    }
+    .itemList ul { 
+        width: 100%;
+    }
+    .itemList ul li {
+        width: 100%;
+        height: 100px;
+        background-color: #f8f8f8;
+        margin-bottom: 10px;
+    }
+    .itemList ul li .ibox{
+        width: 150px;
+        height: 100%;
+        background-color: #eee;
+        float: left;
+        margin-right: 10px;
+        display: flex;
+        display: -webkit-flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+    .itemList ul li .content {
+        padding: 10px 10px 10px 0;
+    }
+    .itemList ul li .content h3{
+        font-size: 18px;
+        margin: 0;
+    }
+    .itemList ul li .content p{
+        font-size: 12px;
+    }
+  </style>
+  <body>
+    <div class="itemList">
+      <div class="itemArea">
+        <ul>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
+<script>
+      class List {
+        constructor(options) {
+          this.el = document.querySelector(options.el);
+          this.data = options.data || [];
+          this.itemHeight = options.itemHeight;
+          this.startIndex = options.startIndex || 0;
+        }
+        // 初始化数据
+        getData() {
+          for(let i=0; i<200; i++) {
+            this.data.push({pic: `图片${i+1}`, title: `标题${i+1}`, content: `内容${i+1}`})
+          }
+        }
+        // 更新DOM
+        updateHtml() {
+          let itemAll = this.el.querySelectorAll(".item");
+          for(let i=this.startIndex, j=0, len=this.pageSize+this.startIndex; i<len && i<this.data.length; i++, j++) {
+            itemAll[j].querySelector(".ibox").innerHTML = this.data[i].pic;
+            itemAll[j].querySelector(".content h3").innerHTML = this.data[i].title;
+            itemAll[j].querySelector(".content p").innerHTML = this.data[i].content;
+          }
+        }
+        // 滚动处理
+        handleScroller() {
+          return () => {
+            let scrollTop = this.el.scrollTop; // 滚动高度
+            let fixedScrollTop = scrollTop - scrollTop % this.itemHeight; // 内容区域Y轴偏移，确保
+            let startIndex = Number.parseInt(scrollTop / this.itemHeight);
+
+            // 当开始位置有变化，则执行
+            if(this.startIndex != startIndex) {
+              this.startIndex = startIndex
+              this.el.querySelector(".itemArea ul").style.transform = 'translateY(' + fixedScrollTop + 'px)';
+              this.updateHtml();
+            }
+          }
+        }
+        default() {
+          let html = "";
+          for(let i=this.startIndex, j=0, len=this.pageSize+this.startIndex; i<len && i<this.data.length; i++, j++) {
+            html+=`
+            <li class="item">
+              <div class="ibox">${this.data[i].pic}</div>
+              <section class="content">
+                <h3>${this.data[i].title}</h3>
+                <p>${this.data[i].content}</p>
+              </section>
+            </li>`;
+          }
+          this.el.querySelector(".itemArea ul").innerHTML = html;
+          // 内容高度
+          this.el.children[0].style.height = this.itemHeight * this.data.length + 'px';
+        }
+        // 当窗口改变
+        resize() {
+          window.onresize = () => {
+            this.pageSize = Math.ceil(
+              this.el.offsetHeight / this.itemHeight 
+            );
+            if(this.startIndex + this.pageSize >= this.data.length) {
+                this.startIndex = 0;
+                this.el.querySelector(".itemArea ul").style.transform = 'translateY(0px)';
+            }
+            this.default()
+          }
+        }
+        // 初始化
+        init() {
+          // 初始化数据
+          if(this.data.length<1) this.getData(); 
+
+          // 获取一个滚动屏 最大可容纳 几个 子元素
+          this.pageSize = Math.ceil(
+            this.el.offsetHeight / this.itemHeight 
+          ) + 1;
+
+          // 初始化节点
+          this.default()
+
+          // Scroll监听
+          this.el.addEventListener('scroll', this.handleScroller.call(this), false);
+
+          // Window resize
+          this.resize();
+        }
+      }
+      
+      /**
+       * class List
+       * 
+       * el - DOM对象
+       * data - 初始化数据
+       * itemHeight - 列表子集元素高度
+       * startIndex - 起始数据下标
+       * 
+      */
+      let list = new List({
+        el: ".itemList",
+        data: [],
+        itemHeight: 110,
+        startIndex: 0
+      })
+
+      list.init();
+    </script>
