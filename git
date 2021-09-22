@@ -105,3 +105,6 @@ git config --system --unset credential.helper
 只需要执行下面命令就可以解决：
 git config --global http.sslVerify false
 
+8、如果 push 等操作没有出现输入密码选项，请先输入如下命令，之后就可以看到输入密码选项了
+git config --system --unset credential.helper
+
