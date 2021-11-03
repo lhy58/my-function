@@ -95,3 +95,15 @@ html,body{
 }
 input:focus::-webkit-input-placeholder{ color:#999; }
 
+
+/*移除type="number"尾部的箭头 */
+.no-arrow::-webkit-outer-spin-button,
+.no-arrow::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+/*使用caret-color改变input光标颜色 */
+.caret-color {
+  /* 关键css */
+  caret-color: #ffd476;
+}
