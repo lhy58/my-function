@@ -130,10 +130,9 @@
   |a    |null |
 
  堆内存
-  |堆内存|
+  | 0x123 |
+  | --- |
   | - - |
-  | - - |
-  | - 0x123 - |
   | {name: '旧城'} |
 
 
@@ -192,14 +191,14 @@
   ```
   * 原因：JavaScript中小数是浮点数，需转二进制进行运算，有些小数无法用二进制表示，所以只能取近似值，所以造成误差
   * 解决方法：
-   - 先变成整数运算，然后再变回小数
-   - toFixed() 性能不好，不推荐
+    - 先变成整数运算，然后再变回小数
+    - toFixed() 性能不好，不推荐
 
 ### 18、绑定点击事件有几种方式？ 
  三种  
- * xxx.onclick = function (){}
- * <xxx onclick=""></xxx>
- * xxx.addEventListence('click', function(){}, false)
+ * 1.xxx.onclick = function (){}
+ * 2.<xxx onclick=""></xxx>
+ * 3.xxx.addEventListence('click', function(){}, false)
 
 ### 19、JavaScript的事件流模型有哪些？
  - 事件冒泡：由最具体的元素接收，并往上传播
@@ -255,6 +254,7 @@
 
 ### 24、 数组的常用方法有哪些？ 
  | 方法 | 作用 | 是否影响原数组 |
+ | --- | --- | --- |        
  | push | 在数组后添加元素，返回数组长度 | 是 |
  | pop | 删除数组最后一项，返回被删除项 | 是 |
  | shift | 删除数组第一项，返回被删除项 | 是 |
@@ -275,6 +275,7 @@
 
  ### 25、 Math的常用方法有哪些？
  | 方法 | 作用 |
+ | --- | --- |
  | Math.max(...arr)| 取arr中的最大值 |
  | Math.min(...arr)| 取arr中的最小值 |
  | Math.ceil(小数) | 小数向上取整 |
@@ -309,7 +310,7 @@ toISOString() 方法用于将js日期转换为ISO标准。 它使用ISO标准将
  * 解码：decodeURI() 
 
  ### 29、什么是BOM？有哪些api？
- BOM就是browser object model，浏览器对象模型
+ BOM就是browser object model，浏览器对象模型；
   | api | 作用 | 代表方法或属性 |
   | window.history | 操纵浏览器的记录 | history.back() |
   | | | history.go(-1) |
