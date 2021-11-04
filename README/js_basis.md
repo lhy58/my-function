@@ -252,6 +252,80 @@
  - 发布订阅
  - async await
 
+### 23、创建一个对象的方式有哪几种？ 
+new Object 创建
+```
+  const obj = new Object();
+  obj.name = 'LHY'
+```
+字面量创建
+```
+  const obj = { name: 'LHY' }
+```
+工厂模式创建
+```
+  function createObj(name){
+    const obj = new Object()
+    obj.name = name
+    return obj
+  }
+  const obj = createObj('LHY')
+```
+构造函数创建
+```
+  function Person(name){
+    this.name = name
+  }
+  const person = new Person('LHY')
+```
+
+### 23、this指向的四种情况？
+指向new 操作符创建实例
+```
+  function Person(name){
+    this.name = name
+    console.log(this)
+  }
+  // this指向当前person实例对象
+  const person = new Person('LHY')
+```
+指向window
+```
+  function fn() {
+    console.log(this)
+  }
+  fn() // 浏览器window，node里global
+```
+指向对象调用方法
+```
+  const target = {
+    fn: function () { console.log(this) }
+  }
+  target.fn() // target
+
+  // 这种就是改变了this了
+  const fn = target.fn
+  fn() // 浏览器window，node里global
+```
+call，apply，bind 改变 this
+```
+  const obj1 = {
+    name: 'LHY',
+    sayName: function(){
+      console.log(this.name)
+    }
+  }
+  const obj2 = {
+    name: '旧城'
+  }
+
+  // 改变sayName的this指向obj2
+  obj1.sayName.call(obj2) // 旧城
+  obj1.sayName.apply(obj2) // 旧城
+  const fn = obj1.sayName.bind(obj2)
+  fn() // 旧城
+```
+
 ### 24、 数组的常用方法有哪些？ 
  | 方法 | 作用 | 是否影响原数组 |
  | --- | --- | --- |        
@@ -317,3 +391,29 @@ toISOString() 方法用于将js日期转换为ISO标准。 它使用ISO标准将
   | | | history.go(-1) |
   |window.innerHeight | 获取浏览器窗口的高度 ||
   |window.innerWidth | 获取浏览器窗口的宽度 ||
+  |window.location | 操作刷新按钮和地址栏 | 
+  location.host：获取域名和端口
+  location.hostname：获取主机名
+  location.port：获取端口号
+  location.pathname：获取url的路径
+  location.search：获取?开始的部分
+  location.href：获取整个url
+  location.hash：获取#开始的部分
+  location.origin：获取当前域名
+  location.navigator：获取当前浏览器信息 |
+
+### 30、 BOM 和 DOM 的关系
+  BOM全称Browser Object Model，即浏览器对象模型，主要处理浏览器窗口和框架。
+
+  DOM全称Document Object Model，即文档对象模型，是 HTML 和XML 的应用程序接口（API），遵循W3C 的标准，所有浏览器公共遵守的标准。
+
+  JS是通过访问BOM（Browser Object Model）对象来访问、控制、修改客户端(浏览器)，由于BOM的window包含了document，window对象的属性和方法是直接可以使用而且被感知的，因此可以直接使用window对象的document属性，通过document属性就可以访问、检索、修改XHTML文档内容与结构。因为document对象又是DOM的根节点。
+
+  可以说，BOM包含了DOM(对象)，浏览器提供出来给予访问的是BOM对象，从BOM对象再访问到DOM对象，从而js可以操作浏览器以及浏览器读取到的文档。
+
+### 31、 JS中的substr()和substring()函数有什么区别
+  - substr(startIndex,length)
+  - substring(startIndex,endIndex)
+
+### 32、解释一下 "use strict" ? 
+“use strict”是Es5中引入的js指令。 使用“use strict”指令的目的是强制执行严格模式下的代码。 在严格模式下，咱们不能在不声明变量的情况下使用变量。 早期版本的js忽略了“use strict”。
