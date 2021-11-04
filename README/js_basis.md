@@ -286,15 +286,15 @@
  | Math.random() * num | 取0-num的随机数 |
 
  ### 26、 哪些因素导致内存泄漏？如何解决？
-  如何监控内存状况
-   - 浏览器任务管理器
-   - 浏览器按F12打开调试窗口-选择Performance - 录制后查看
-   - 堆快照：浏览器按F12打开调试窗口-选择Memory-录制后选中Statistics，查看数组，对象，字符串等所占内存
-  如何避免 
-   - 减少全局变量
-   - 未清除定时器
-   - 合理使用闭包
-   - 分离DOM
+  * 如何监控内存状况
+    - 浏览器任务管理器
+    - 浏览器按F12打开调试窗口-选择Performance - 录制后查看
+    - 堆快照：浏览器按F12打开调试窗口-选择Memory-录制后选中Statistics，查看数组，对象，字符串等所占内存
+  * 如何避免 
+    - 减少全局变量
+    - 未清除定时器
+    - 合理使用闭包
+    - 分离DOM
 
 ### 27、 如何将 JS 日期转换为ISO标准   
 toISOString() 方法用于将js日期转换为ISO标准。 它使用ISO标准将js Date对象转换为字符串
@@ -312,6 +312,7 @@ toISOString() 方法用于将js日期转换为ISO标准。 它使用ISO标准将
  ### 29、什么是BOM？有哪些api？
  BOM就是browser object model，浏览器对象模型；
   | api | 作用 | 代表方法或属性 |
+  | --- | --- | --- |
   | window.history | 操纵浏览器的记录 | history.back() |
   | | | history.go(-1) |
   |window.innerHeight | 获取浏览器窗口的高度 ||
