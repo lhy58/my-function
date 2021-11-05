@@ -388,19 +388,18 @@ toISOString() 方法用于将js日期转换为ISO标准。 它使用ISO标准将
   | api | 作用 | 代表方法或属性 |
   | --- | --- | --- |
   | window.history | 操纵浏览器的记录 | history.back() |
-  | | | history.go(-1) |
+                              | | | history.go(-1) |
   |window.innerHeight | 获取浏览器窗口的高度 ||
   |window.innerWidth | 获取浏览器窗口的宽度 ||
-  |window.location | 操作刷新按钮和地址栏 | 
-  location.host：获取域名和端口
-  location.hostname：获取主机名
-  location.port：获取端口号
-  location.pathname：获取url的路径
-  location.search：获取?开始的部分
-  location.href：获取整个url
-  location.hash：获取#开始的部分
-  location.origin：获取当前域名
-  location.navigator：获取当前浏览器信息 |
+  |window.location | 操作刷新按钮和地址栏 | location.host：获取域名和端口
+                                  | | | location.hostname：获取主机名
+                                  | | | location.port：获取端口号
+                                  | | | location.pathname：获取url的路径
+                                  | | | location.search：获取?开始的部分
+                                  | | | location.href：获取整个url
+                                  | | | location.hash：获取#开始的部分
+                                  | | | location.origin：获取当前域名
+                                  | | | location.navigator：获取当前浏览器信息
 
 ### 30、 BOM 和 DOM 的关系
   BOM全称Browser Object Model，即浏览器对象模型，主要处理浏览器窗口和框架。
