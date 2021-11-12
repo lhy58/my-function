@@ -1,0 +1,55 @@
+/*1.图片展示原图*/
+.img{
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* 2.图片固定宽高后，出现拉伸 使用 object-fit 解决 */
+.img {
+  width: 150px;
+  height: 150px;
+  /*使图片内容在保持宽高比的同时填充元素的整个内容框*/
+  object-fit: cover; 
+  object-position: 50% 50%; /*展示图片的位置（居中）*/
+}
+
+/* 3.图片丢失 */
+/* 3.1.利用图片加载失败，触发 <img> 元素的 onerror 事件，给加载失败的 <img> 元素新增一个样式类； */
+/* <img src="test.png" alt="图片描述" onerror="this.classList.add('error');"> */
+
+/* 3.2.利用新增的样式类，配合 <img> 元素的伪元素，展示默认兜底图的同时，还能一起展示 <img> 元素的 alt 信息。 */
+img.error {
+  position: relative;
+  display: inline-block;
+}
+
+img.error::before {
+  content: "";
+  /** 定位代码 **/
+  background: url(error-default.png);
+}
+
+img.error::after {
+  content: attr(alt);
+  /** 定位代码 **/
+}
+
+
+/* 4.滚动平滑 */
+/* 使用 scroll-behavior: smooth 让滚动丝滑 (切换tab锚点时) */
+.scroll {
+  scroll-behavior: smooth;
+}
+
+/* 5.粘性滚动 */
+/* 使用 scroll-snap-type 优化滚动效果（轮播效果时） */
+.scroll {
+  overflow: auto;
+  scroll-snap-type: x mandatory;
+}

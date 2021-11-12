@@ -1,15 +1,3 @@
-/*图片展示原图*/
-.img{
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    max-width: 100%;
-    max-height: 100%;
-}
-
 
 /*去掉滚动条*/
 .scroll {
@@ -106,4 +94,37 @@ input:focus::-webkit-input-placeholder{ color:#999; }
 .caret-color {
   /* 关键css */
   caret-color: #ffd476;
+}
+
+/* background-clip 实现 边框渐变 */
+.container {
+  border: solid 1px transparent;
+  border-radius: 5px;
+  background-image: linear-gradient(#fff, #fff),
+    linear-gradient(45deg, #56ecc7, #6067f3);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+}
+
+/* 利用 user-select: all，可以将需要一次选中的内容进行包裹，用户只需要点击一次，就可以选中该段信息： */
+.g-select-all {
+  user-select: all
+}
+
+.g-select-all::selection {
+  background: #f7ec91;
+  color: #333;
+  text-shadow: 0 0 .5px #aaa, 1px 1px .5px #aaa, 2px 2px .5px #aaa, 3px 3px .5px #aaa, 4px 4px .5px #aaa;
+}
+
+
+/* 保证非鼠标用户体验，合理运用 :focus-visible（ 使用键盘控制焦点点击 Button ） */
+button:active {
+  background: #eee;
+}
+button:focus {
+  outline: 2px solid red;
+}
+button:focus:not(:focus-visible) {
+  outline: none;
 }
