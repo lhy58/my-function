@@ -94,3 +94,6 @@ let app = http.createServer ( function(request,response){
 } ) 
 
 app.listen(8000)
+
+
+/*****2. 使用 npx http-server 命令快速的开启一个静态服务器*****/
