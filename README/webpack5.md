@@ -59,12 +59,19 @@ npm install  webpack webpack-cli --save-dev
   npm install html-webpack-plugin -D
 
   module.exports = {
-
+   // 多页面应用
     plugins: [
       new HtmlWebpackPlugin({
         template: './index.html',
         filename: 'app.html', // 输出文件名
-        inject: 'body' // 引入的script在body标签里
+        inject: 'body', // 引入的script在body标签里
+        chunks: ['index', 'another'], // 载入entry入口文件下的那些js模块
+      }),
+      new HtmlWebpackPlugin({
+        template: './index1.html',
+        filename: 'app1.html',
+        inject: 'body',
+        chunks: ['another'],
       })
     ]
 
@@ -99,7 +106,7 @@ module.exports = (env) => {
 ```
   module.exports = {
 
-    devtool: cheap-source-map'
+    devtool: 'cheap-source-map', // 开发模式的时候配置
 
   };
 ```
@@ -178,7 +185,7 @@ module.exports = (env) => {
     rules: [
       {
         test: /\.(css|less)$/i,
-        use: ['style-loader', 'css-loader', 'less-loader'], // use使用什么loader, 顺序很重要，从右-左执行
+        use: ['style-loader', 'css-loader', 'less-loader'], // use使用什么loader, 顺序很重要，从右-左执行(从下面开始加载)
       }
     ]
   };
@@ -232,6 +239,49 @@ module.exports = {
   },
 };
 ```
+
+- css 模块化 和 postcss
+
+  - 1.webpack.config.js
+
+  ```
+    module.exports = {
+
+      rules: [
+        {
+          test: /\.(css|less)$/i,
+          use: [
+            'style-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true, // 开启模块化，避免类名重复。 如： import styles from './styles.css'
+              }
+            },
+            'postcss-loader' //  一种对css编译的工具
+          ],
+        }
+      ]
+    };
+  ```
+
+  - 2.postcss 配置
+    创建 postcss.config.js 文件
+
+  ```
+    module.exports = {
+      plugins:[
+        require('autoprefixer'), // 自动补全代码前缀
+        require('postcss-nested'), // .css样式里可以写嵌套样式
+      ]
+    };
+  ```
+
+  - 3.在 package.json 配置 browserlist (浏览器)
+
+  ```
+    "browserlist": ["> 1%", "last 2 versions"], // 浏览器大于1%的使用率
+  ```
 
 ### 加载 fonts 字体
 
@@ -467,7 +517,8 @@ module.exports = {
     };
   ```
 
-- 2. webpack 配置引入
+- 2.webpack 配置引入
+
   ```
     module.exports = {
       externalsType: 'script', // html以script标签引入
@@ -477,5 +528,40 @@ module.exports = {
           '$' // 别名： import $ from 'jquery'
         ]
       }
+    };
+  ```
+
+### [渐进式网络应用程序 （离线环境下浏览器运行程序)](https://webpack.docschina.org/guides/progressive-web-application/#registering-our-service-worker)
+
+- 使用 workbox-webpack-plugin 插件
+- 添加 Workbox
+- 注册 Servce Worker
+
+```
+  1.chrome浏览器输入：chrome://serviceworker-internals/
+  2.找到对应的缓存运行程序，Unregister 可以清除缓存
+```
+
+### Shimming 预置全局变量
+
+- 使用 ProvidePlugin 插件
+
+* 1.src/index.js, 以 lodash 为例
+
+  ```
+    // import _ from 'lodash'
+    console.log(_.json(['11','22','']))
+  ```
+
+* 2.webpack.config.js
+
+  ```
+    const webpack = require('webpack')
+    module.exports = {
+      plugins: [
+        new webpack.ProvidePlugin({
+          _: 'lodash', // 将package.json 的 lodash 引入进来
+        })
+      ]
     };
   ```
